@@ -1,0 +1,31 @@
+<div class="page-header">
+  <div>
+    <h2>Activity Logs</h2>
+    <p>Track all actions performed across the system</p>
+  </div>
+</div>
+
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Action</th>
+        <th>Target</th>
+        <th>Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs">
+        <td>{{ log.user }}</td>
+        <td>{{ log.action }}</td>
+        <td>{{ log.target }}</td>
+        <td>{{ log.timestamp }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="table-empty" *ngIf="logs.length === 0">
+    <p>No activity recorded</p>
+  </div>
+</div>

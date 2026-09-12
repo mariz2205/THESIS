@@ -1,0 +1,15 @@
+<div class="page-header" *ngIf="report">
+  <div>
+    <h2>{{ report.title }}</h2>
+    <p>{{ report.type }} report submitted by {{ report.createdBy }}</p>
+  </div>
+  <a routerLink="/reports" class="secondary-btn">← Back to Reports</a>
+</div>
+
+<div class="card" *ngIf="report">
+  <p><strong>Barangay:</strong> {{ report.barangay }}</p>
+  <p><strong>Date:</strong> {{ report.dateCreated }}</p>
+  <p><strong>Status:</strong> {{ report.status }}</p>
+  <hr />
+  <p>{{ report.content }}</p>
+</div>

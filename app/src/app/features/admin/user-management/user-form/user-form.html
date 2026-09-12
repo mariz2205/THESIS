@@ -1,0 +1,33 @@
+<div class="page-header">
+  <div>
+    <h2>{{ isEditMode ? 'Edit User' : 'Add User' }}</h2>
+    <p>{{ isEditMode ? 'Update account details' : 'Create a new account' }}</p>
+  </div>
+</div>
+
+<div class="card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="filters">
+      <input type="text" formControlName="name" placeholder="Name" />
+      <input type="email" formControlName="email" placeholder="Email" />
+    </div>
+
+    <div class="filters">
+      <select formControlName="role">
+        <option value="" disabled>Select role</option>
+        <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+      </select>
+
+      <select formControlName="status">
+        <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <div class="filters">
+      <button type="submit" class="primary-btn" [disabled]="form.invalid">
+        {{ isEditMode ? 'Update' : 'Add' }}
+      </button>
+      <button type="button" class="secondary-btn" (click)="onCancel()">Cancel</button>
+    </div>
+  </form>
+</div>
