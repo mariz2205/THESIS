@@ -1,0 +1,215 @@
+<div class="calls-page">
+
+    <div class="page-header">
+        <div>
+            <h2>Call Management</h2>
+            <p>Monitor and manage incoming emergency calls.</p>
+        </div>
+
+        <div class="call-status">
+            <span class="status-dot"></span>
+            Telephony System Ready
+        </div>
+    </div>
+
+
+    <!-- CALL SUMMARY -->
+
+    <div class="call-summary">
+
+        <div class="summary-card">
+            <div class="summary-icon active-icon">☎</div>
+
+            <div>
+                <span>Active Calls</span>
+                <strong>0 / 2</strong>
+            </div>
+        </div>
+
+
+        <div class="summary-card">
+            <div class="summary-icon queue-icon">≡</div>
+
+            <div>
+                <span>Calls in Queue</span>
+                <strong>0</strong>
+            </div>
+        </div>
+
+
+        <div class="summary-card">
+            <div class="summary-icon waiting-icon">◷</div>
+
+            <div>
+                <span>Waiting Calls</span>
+                <strong>0</strong>
+            </div>
+        </div>
+
+
+        <div class="summary-card">
+            <div class="summary-icon completed-icon">✓</div>
+
+            <div>
+                <span>Completed Calls</span>
+                <strong>0</strong>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- MAIN CALL MANAGEMENT -->
+
+    <div class="call-management-grid">
+
+        <!-- ACTIVE CALLS -->
+
+        <div class="call-card active-calls-card">
+
+            <div class="card-header">
+                <div>
+                    <h3>Active Calls</h3>
+                    <p>Calls currently being handled by operators.</p>
+                </div>
+
+                <span class="counter">0 / 2</span>
+            </div>
+
+
+            <div class="operator-slots">
+
+                <div class="operator-slot">
+
+                    <div class="operator-header">
+                        <div class="operator-number">
+                            <span class="operator-circle">1</span>
+
+                            <div>
+                                <strong>Operator 1</strong>
+                                <small>Available</small>
+                            </div>
+                        </div>
+
+                        <span class="available-badge">
+                            Available
+                        </span>
+                    </div>
+
+
+                    <div class="no-call">
+
+                        <div class="no-call-icon">☎</div>
+
+                        <h4>No active call</h4>
+
+                        <p>Waiting for an incoming emergency call.</p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="operator-slot">
+
+                    <div class="operator-header">
+                        <div class="operator-number">
+                            <span class="operator-circle">2</span>
+
+                            <div>
+                                <strong>Operator 2</strong>
+                                <small>Available</small>
+                            </div>
+                        </div>
+
+                        <span class="available-badge">
+                            Available
+                        </span>
+                    </div>
+
+
+                    <div class="no-call">
+
+                        <div class="no-call-icon">☎</div>
+
+                        <h4>No active call</h4>
+
+                        <p>Waiting for an incoming emergency call.</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CALL QUEUE -->
+
+        <div class="call-card queue-card">
+
+            <div class="card-header">
+                <div>
+                    <h3>Call Queue</h3>
+                    <p>Callers waiting for an available operator.</p>
+                </div>
+
+                <span class="counter">0</span>
+            </div>
+
+
+            <div class="queue-empty">
+
+                <div class="queue-empty-icon">≡</div>
+
+                <h4>No callers in queue</h4>
+
+                <p>
+                    Incoming calls will appear here when all
+                    operators are busy.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SELECTED CALL INFORMATION -->
+
+    <div class="call-card call-information">
+
+        <div class="card-header">
+            <div>
+                <h3>Call Information</h3>
+                <p>Details of the currently selected emergency call.</p>
+            </div>
+
+            <span class="inactive-badge">
+                No Active Call
+            </span>
+        </div>
+
+
+        <div class="call-information-content">
+
+            <div class="information-placeholder">
+
+                <div class="information-icon">☎</div>
+
+                <h4>No call selected</h4>
+
+                <p>
+                    Caller information and call controls will
+                    appear here when an emergency call is received.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
