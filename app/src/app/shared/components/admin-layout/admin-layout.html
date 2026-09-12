@@ -1,0 +1,37 @@
+<div class="sidebar">
+  <div class="logo">
+    <h2>EMERGENCY</h2>
+    <span>ADMIN DASHBOARD</span>
+  </div>
+
+  <nav>
+    <a routerLink="/users" routerLinkActive="active" class="nav-btn">Users</a>
+    <a routerLink="/reports" routerLinkActive="active" class="nav-btn">View Reports</a>
+    <a routerLink="/activity-logs" routerLinkActive="active" class="nav-btn">Activity Logs</a>
+  </nav>
+
+    <div class="sidebar-bottom">
+        <p>Municipality of Angat</p>
+        <span>Emergency Response System</span>
+    </div>
+</div>
+
+<div class="main-content">
+  <div class="topbar">
+    <div>
+      <h1>Admin Dashboard</h1>
+      <p>Emergency Operations Management</p>
+    </div>
+
+    <div class="operator">
+        <app-notification></app-notification>
+        <div class="operator-icon">A</div>
+            <div>
+                <strong>Admin</strong>
+                <small>Authorized Personnel</small>
+            </div>
+    </div>
+  </div>
+
+  <router-outlet></router-outlet>
+</div>
