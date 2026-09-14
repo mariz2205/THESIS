@@ -27,13 +27,25 @@
     </div>
 
     <div class="operator">
-        <app-notification></app-notification>
-        <div class="operator-icon">A</div>
-            <div>
-                <strong>Admin</strong>
-                <small>Authorized Personnel</small>
-            </div>
-    </div>
+
+      <app-notification></app-notification>
+
+      <div class="operator-icon">A</div>
+
+      <div class="operator-info">
+        <strong>Admin</strong>
+        <small>Authorized Personnel</small>
+      </div>
+
+      <button
+        type="button"
+        class="logout-btn"
+        (click)="logout()"
+      >
+        Logout
+      </button> 
+
+</div>
   </div>
 
   <router-outlet></router-outlet>

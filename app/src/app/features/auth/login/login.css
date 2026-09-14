@@ -1,0 +1,191 @@
+/* Full login page */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f4f7fb 0%,
+      #e9eef5 100%
+    );
+
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Login card */
+.login-card {
+  width: 100%;
+  max-width: 430px;
+
+  background: #ffffff;
+
+  padding: 40px;
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.08);
+
+  box-sizing: border-box;
+}
+
+/* Main title */
+.login-card h1 {
+  margin: 0;
+
+  font-size: 28px;
+  line-height: 1.25;
+
+  text-align: center;
+
+  color: #1f2937;
+}
+
+/* Municipality subtitle */
+.subtitle {
+  margin: 10px 0 32px;
+
+  text-align: center;
+
+  font-size: 15px;
+
+  color: #6b7280;
+}
+
+/* Form group */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Labels */
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  color: #374151;
+}
+
+/* Inputs */
+.form-group input {
+  width: 100%;
+
+  padding: 13px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  font-size: 15px;
+
+  color: #111827;
+
+  background: #ffffff;
+
+  box-sizing: border-box;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Input focus */
+.form-group input:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Placeholder */
+.form-group input::placeholder {
+  color: #9ca3af;
+}
+
+/* Error message */
+.error-message {
+  margin: 0 0 18px;
+
+  padding: 11px 12px;
+
+  border-radius: 7px;
+
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+
+  color: #b91c1c;
+
+  font-size: 14px;
+
+  line-height: 1.4;
+}
+
+/* Login button */
+.login-card button[type="submit"] {
+  width: 100%;
+
+  padding: 13px 16px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+/* Button hover */
+.login-card button[type="submit"]:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+/* Button click */
+.login-card button[type="submit"]:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Disabled/loading button */
+.login-card button[type="submit"]:disabled {
+  background: #93c5fd;
+
+  cursor: not-allowed;
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+
+  .login-container {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 28px 22px;
+
+    border-radius: 12px;
+  }
+
+  .login-card h1 {
+    font-size: 24px;
+  }
+}

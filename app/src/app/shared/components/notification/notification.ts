@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, afterNextRender } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
 import { Notification } from '../../models/notification.models';
 import { NotificationService } from '../../services/notification';
 
@@ -9,30 +10,72 @@ import { NotificationService } from '../../services/notification';
   templateUrl: './notification.html',
   styleUrl: './notification.css',
 })
-export class NotificationComponent implements OnInit {
+export class NotificationComponent {
+
   notifications: Notification[] = [];
   isOpen = false;
 
-  constructor(private notificationService: NotificationService) {}
-
-  ngOnInit(): void {
-    this.loadNotifications();
+  constructor(
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef
+  ) {
+    afterNextRender(() => {
+      this.loadNotifications();
+    });
   }
 
   loadNotifications(): void {
-    this.notifications = this.notificationService.getNotifications();
+    this.notificationService.getNotifications().subscribe({
+      next: (notifications) => {
+        console.log(
+          'Notifications received from backend:',
+          notifications
+        );
+
+        this.notifications = notifications;
+
+        this.cdr.detectChanges();
+      },
+
+      error: (error) => {
+        console.error(
+          'Failed to load notifications:',
+          error
+        );
+
+        this.notifications = [];
+
+        this.cdr.detectChanges();
+      }
+    });
   }
 
   toggle(): void {
     this.isOpen = !this.isOpen;
+
+    if (this.isOpen) {
+      this.loadNotifications();
+    }
   }
 
   get unreadCount(): number {
-    return this.notificationService.getUnreadCount();
+    return this.notifications.filter(
+      notification => !notification.read
+    ).length;
   }
 
   onMarkRead(id: number): void {
-    this.notificationService.markAsRead(id);
-    this.loadNotifications();
+    this.notificationService.markAsRead(id).subscribe({
+      next: () => {
+        this.loadNotifications();
+      },
+
+      error: (error) => {
+        console.error(
+          'Failed to mark notification as read:',
+          error
+        );
+      }
+    });
   }
 }

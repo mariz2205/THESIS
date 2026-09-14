@@ -3,10 +3,14 @@
     <h2>User Management</h2>
     <p>Manage administrator, dispatcher, and field personnel accounts</p>
   </div>
-  <a routerLink="/users/new" class="primary-btn">+ Add User</a>
+
+  <a routerLink="/users/new" class="primary-btn">
+    + Add User
+  </a>
 </div>
 
 <div class="card">
+
   <table>
     <thead>
       <tr>
@@ -17,31 +21,62 @@
         <th>Actions</th>
       </tr>
     </thead>
+
     <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.role }}</td>
-        <td>{{ user.status }}</td>
-        <td>
-          <a [routerLink]="['/users', user.id, 'edit']" class="secondary-btn">Edit</a>
-          <button class="secondary-btn" (click)="onDelete(user.id)">Delete</button>
-        </td>
-      </tr>
+      @for (user of users; track user.id) {
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.status }}</td>
+          <td>
+            <a
+              [routerLink]="['/users', user.id, 'edit']"
+              class="secondary-btn"
+            >
+              Edit
+            </a>
+
+            <button
+              class="secondary-btn"
+              (click)="onDelete(user.id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      }
     </tbody>
   </table>
 
-  <div class="table-empty" *ngIf="users.length === 0">
-    <p>No users found</p>
-  </div>
+  @if (users.length === 0) {
+    <div class="table-empty">
+      <p>No users found</p>
+    </div>
+  }
+
 </div>
 
-<div class="modal-backdrop" *ngIf="showConfirm">
-  <div class="modal-box">
-    <p>Delete this user?</p>
-    <div class="modal-actions">
-      <button class="primary-btn" (click)="onConfirmDelete()">OK</button>
-      <button class="secondary-btn" (click)="onCancelDelete()">Cancel</button>
+@if (showConfirm) {
+  <div class="modal-backdrop">
+    <div class="modal-box">
+      <p>Delete this user?</p>
+
+      <div class="modal-actions">
+        <button
+          class="primary-btn"
+          (click)="onConfirmDelete()"
+        >
+          OK
+        </button>
+
+        <button
+          class="secondary-btn"
+          (click)="onCancelDelete()"
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   </div>
-</div>
+}

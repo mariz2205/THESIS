@@ -7,27 +7,70 @@
 
 <div class="card">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
     <div class="filters">
-      <input type="text" formControlName="name" placeholder="Name" />
-      <input type="email" formControlName="email" placeholder="Email" />
+      <input
+        type="text"
+        formControlName="name"
+        placeholder="Name"
+      />
+
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="Email"
+      />
     </div>
+
+    @if (!isEditMode) {
+      <div class="filters">
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+        />
+      </div>
+    }
 
     <div class="filters">
       <select formControlName="role">
         <option value="" disabled>Select role</option>
-        <option *ngFor="let r of roles" [value]="r">{{ r }}</option>
+
+        @for (r of roles; track r) {
+          <option [value]="r">{{ r }}</option>
+        }
       </select>
 
       <select formControlName="status">
-        <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+        @for (s of statuses; track s) {
+          <option [value]="s">{{ s }}</option>
+        }
       </select>
     </div>
 
     <div class="filters">
-      <button type="submit" class="primary-btn" [disabled]="form.invalid">
-        {{ isEditMode ? 'Update' : 'Add' }}
+      <button
+        type="submit"
+        class="primary-btn"
+        [disabled]="form.invalid || isLoading"
+      >
+        {{ isLoading ? 'Saving...' : (isEditMode ? 'Update' : 'Add') }}
       </button>
-      <button type="button" class="secondary-btn" (click)="onCancel()">Cancel</button>
+
+      <button
+        type="button"
+        class="secondary-btn"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
     </div>
+
+    @if (errorMessage) {
+      <p class="error-message">
+        {{ errorMessage }}
+      </p>
+    }
+
   </form>
 </div>

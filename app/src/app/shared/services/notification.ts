@@ -1,25 +1,40 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+
 import { Notification } from '../models/notification.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  private mockNotifications: Notification[] = [
-    { id: 1, message: 'New incident reported in Barangay Poblacion', type: 'warning', timestamp: '2026-09-12 08:30', read: false },
-    { id: 2, message: 'Monthly report finalized', type: 'success', timestamp: '2026-09-11 16:00', read: true },
-  ];
 
-  getNotifications(): Notification[] {
-    return this.mockNotifications;
+  private readonly apiUrl = 'http://localhost:3000/api/notifications';
+
+  constructor(private http: HttpClient) {}
+
+  getNotifications(): Observable<Notification[]> {
+    return this.http
+      .get<{ success: boolean; data: Notification[] }>(this.apiUrl)
+      .pipe(
+        map(response => response.data)
+      );
   }
 
-  getUnreadCount(): number {
-    return this.mockNotifications.filter(n => !n.read).length;
+  getNotificationById(id: number): Observable<Notification> {
+    return this.http
+      .get<{ success: boolean; data: Notification }>(
+        `${this.apiUrl}/${id}`
+      )
+      .pipe(
+        map(response => response.data)
+      );
   }
 
-  markAsRead(id: number): void {
-    const notif = this.mockNotifications.find(n => n.id === id);
-    if (notif) notif.read = true;
+  markAsRead(id: number): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/${id}/read`,
+      {}
+    );
   }
 }
