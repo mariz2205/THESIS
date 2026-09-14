@@ -1,38 +1,55 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+
 import { User } from '../../../shared/models/user.models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private mockUsers: User[] = [
-    { id: 1, name: 'Juan Dela Cruz', email: 'juan@example.com', role: 'Dispatcher', status: 'Active' },
-    { id: 2, name: 'Maria Santos', email: 'maria@example.com', role: 'Medical', status: 'Active' },
-  ];
 
-  getUsers(): User[] {
-    return this.mockUsers;
+  private readonly apiUrl = 'http://localhost:3000/api/users';
+
+  constructor(private http: HttpClient) {}
+
+  getUsers(): Observable<User[]> {
+    return this.http
+      .get<{ success: boolean; data: User[] }>(this.apiUrl)
+      .pipe(
+        map(response => response.data)
+      );
   }
 
-  getUserById(id: number): User | undefined {
-    return this.mockUsers.find(u => u.id === id);
+  getUserById(id: number): Observable<User> {
+    return this.http.get<{ success: boolean; data: User }>(
+      `${this.apiUrl}/${id}`
+    ).pipe(
+      map(response => response.data)
+    );
   }
 
-  addUser(user: Omit<User, 'id'>): void {
-    const newId = this.mockUsers.length
-      ? Math.max(...this.mockUsers.map(u => u.id)) + 1
-      : 1;
-    this.mockUsers.push({ id: newId, ...user });
+  addUser(user: Omit<User, 'id'>): Observable<User> {
+    return this.http.post<{ success: boolean; data: User }>(
+      this.apiUrl,
+      user
+    ).pipe(
+      map(response => response.data)
+    );
   }
 
-  updateUser(id: number, updated: Omit<User, 'id'>): void {
-    const index = this.mockUsers.findIndex(u => u.id === id);
-    if (index !== -1) {
-      this.mockUsers[index] = { id, ...updated };
-    }
+  updateUser(id: number, updated: Omit<User, 'id'>): Observable<User> {
+    return this.http.put<{ success: boolean; data: User }>(
+      `${this.apiUrl}/${id}`,
+      updated
+    ).pipe(
+      map(response => response.data)
+    );
   }
 
-  deleteUser(id: number): void {
-    this.mockUsers = this.mockUsers.filter(u => u.id !== id);
+  deleteUser(id: number): Observable<any> {
+    return this.http.delete(
+      `${this.apiUrl}/${id}`
+    );
   }
 }
