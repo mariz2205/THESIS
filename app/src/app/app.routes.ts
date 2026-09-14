@@ -7,6 +7,9 @@ import { ReportList } from './features/admin/reports/report-list/report-list';
 import { ReportDetail } from './features/admin/reports/report-detail/report-detail';
 import { ActivityLogList } from './features/admin/activity-logs/activity-log-list/activity-log-list';
 import { authGuard } from './core/guards/auth-guard';
+import { Dashboard } from './features/emergency/dashboard/dashboard';
+import { Calls } from './features/emergency/calls/calls';
+import { DepartmentRouting } from './features/emergency/department-routing/department-routing';
 
 export const routes: Routes = [
   {
