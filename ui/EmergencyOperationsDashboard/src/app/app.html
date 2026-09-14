@@ -1,0 +1,2740 @@
+<div class="app-shell">
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside class="sidebar">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        911
+      </div>
+
+      <div class="brand-text">
+        <strong>ANGAT EOC</strong>
+        <span>Emergency Operations Center</span>
+      </div>
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+      <!-- OPERATIONS -->
+
+      <div class="nav-section">
+
+        <div class="nav-section-title">
+          OPERATIONS
+        </div>
+
+        <button
+          *ngFor="let item of operations"
+          class="nav-item"
+          [class.active]="currentPage === item.name"
+          (click)="showPage(item.name)">
+
+          <span class="nav-icon">
+            {{ item.icon }}
+          </span>
+
+          <span>
+            {{ item.name }}
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <!-- FIELD RESOURCES -->
+
+      <div class="nav-section">
+
+        <div class="nav-section-title">
+          FIELD RESOURCE TRACKING
+        </div>
+
+        <button
+          *ngFor="let item of fieldResources"
+          class="nav-item"
+          [class.active]="currentPage === item.name"
+          (click)="showPage(item.name)">
+
+          <span class="nav-icon">
+            {{ item.icon }}
+          </span>
+
+          <span>
+            {{ item.name }}
+          </span>
+
+        </button>
+
+      </div>
+
+
+      <!-- RECORDS -->
+
+      <div class="nav-section">
+
+        <div class="nav-section-title">
+          RECORDS
+        </div>
+
+        <button
+          *ngFor="let item of records"
+          class="nav-item"
+          [class.active]="currentPage === item.name"
+          (click)="showPage(item.name)">
+
+          <span class="nav-icon">
+            {{ item.icon }}
+          </span>
+
+          <span>
+            {{ item.name }}
+          </span>
+
+        </button>
+
+      </div>
+
+    </nav>
+
+
+    <div class="operator-box">
+
+      <div class="operator-avatar">
+        AD
+      </div>
+
+      <div class="operator-info">
+
+        <strong>
+          Admin / Dispatcher
+        </strong>
+
+        <span>
+          <i class="online-dot"></i>
+          Operator 01
+        </span>
+
+      </div>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =====================================================
+       MAIN CONTENT
+  ====================================================== -->
+
+  <main class="main-content">
+
+
+    <!-- TOPBAR -->
+
+    <header class="topbar">
+
+      <div class="topbar-left">
+
+        <div class="municipality">
+          MUNICIPALITY OF ANGAT
+        </div>
+
+        <h1 class="page-title">
+          {{ pageTitle }}
+        </h1>
+
+      </div>
+
+
+      <div class="topbar-right">
+
+        <div class="telephony-status">
+
+          <span class="status-dot"></span>
+
+          Telephony System Online
+
+        </div>
+
+        <div class="clock">
+          19:00:00
+        </div>
+
+        <button
+          class="notification"
+          (click)="notify()"
+          aria-label="Notifications">
+
+          🔔
+
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         PAGE CONTENT
+    ====================================================== -->
+
+    <section class="page-content">
+
+
+      <!-- ===================================================
+           DASHBOARD
+      ==================================================== -->
+
+      <div
+        *ngIf="currentPage === 'Dashboard'"
+        class="dashboard-page">
+
+
+        <!-- KPI -->
+
+        <div class="kpi-grid">
+
+          <div class="kpi-card">
+
+            <div class="kpi-top">
+
+              <span class="kpi-label">
+                ACTIVE CALLS
+              </span>
+
+              <span class="kpi-icon kpi-teal">
+                ☎
+              </span>
+
+            </div>
+
+            <div class="kpi-value">
+              {{ activeCalls }}
+            </div>
+
+            <div class="kpi-description">
+              Calls currently in progress
+            </div>
+
+          </div>
+
+
+          <div class="kpi-card">
+
+            <div class="kpi-top">
+
+              <span class="kpi-label">
+                CALLS IN QUEUE
+              </span>
+
+              <span class="kpi-icon kpi-purple">
+                ☷
+              </span>
+
+            </div>
+
+            <div class="kpi-value">
+              {{ queueCount }}
+            </div>
+
+            <div class="kpi-description">
+              Callers waiting
+            </div>
+
+          </div>
+
+
+          <div class="kpi-card">
+
+            <div class="kpi-top">
+
+              <span class="kpi-label">
+                AVG RESPONSE TIME
+              </span>
+
+              <span class="kpi-icon kpi-yellow">
+                ◷
+              </span>
+
+            </div>
+
+            <div class="kpi-value">
+              02:18
+            </div>
+
+            <div class="kpi-description">
+              Average dispatch response
+            </div>
+
+          </div>
+
+
+          <div class="kpi-card">
+
+            <div class="kpi-top">
+
+              <span class="kpi-label">
+                OPEN INCIDENTS
+              </span>
+
+              <span class="kpi-icon kpi-red">
+                ⚠
+              </span>
+
+            </div>
+
+            <div class="kpi-value">
+              {{ openIncidents }}
+            </div>
+
+            <div class="kpi-description">
+              Active emergency cases
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- CHART AREA -->
+
+        <div class="dashboard-grid">
+
+
+          <!-- CALL TREND -->
+
+          <div class="dashboard-card chart-card">
+
+            <div class="card-header">
+
+              <div>
+
+                <div class="card-title">
+                  Emergency Calls Trend
+                </div>
+
+                <div class="card-subtitle">
+                  Calls received over the last 7 days
+                </div>
+
+              </div>
+
+              <select
+                class="chart-select"
+                aria-label="Select time period">
+
+                <option>
+                  Last 7 days
+                </option>
+
+                <option>
+                  Last 30 days
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div class="chart-body">
+
+              <div class="fake-chart">
+
+                <div class="chart-y-labels">
+                  <span>80</span>
+                  <span>60</span>
+                  <span>40</span>
+                  <span>20</span>
+                  <span>0</span>
+                </div>
+
+                <div class="chart-area">
+
+                  <div class="grid-line"></div>
+                  <div class="grid-line"></div>
+                  <div class="grid-line"></div>
+                  <div class="grid-line"></div>
+                  <div class="grid-line"></div>
+
+                  <div class="chart-line teal-line">
+                    <span style="height:48%"></span>
+                    <span style="height:65%"></span>
+                    <span style="height:56%"></span>
+                    <span style="height:82%"></span>
+                    <span style="height:75%"></span>
+                    <span style="height:96%"></span>
+                    <span style="height:89%"></span>
+                  </div>
+
+                  <div class="chart-line purple-line">
+                    <span style="height:34%"></span>
+                    <span style="height:44%"></span>
+                    <span style="height:39%"></span>
+                    <span style="height:58%"></span>
+                    <span style="height:52%"></span>
+                    <span style="height:68%"></span>
+                    <span style="height:64%"></span>
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="chart-days">
+                <span>Mon</span>
+                <span>Tue</span>
+                <span>Wed</span>
+                <span>Thu</span>
+                <span>Fri</span>
+                <span>Sat</span>
+                <span>Sun</span>
+              </div>
+
+              <div class="chart-legend">
+
+                <span>
+                  <i class="legend-teal"></i>
+                  Emergency Calls
+                </span>
+
+                <span>
+                  <i class="legend-purple"></i>
+                  Dispatched
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- INCIDENT CATEGORIES -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header">
+
+              <div>
+
+                <div class="card-title">
+                  Incident Categories
+                </div>
+
+                <div class="card-subtitle">
+                  Distribution of active incidents
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div class="donut-area">
+
+              <div class="donut">
+
+                <div class="donut-center">
+                  <strong>100%</strong>
+                  <span>Incidents</span>
+                </div>
+
+              </div>
+
+
+              <div class="legend">
+
+                <div class="legend-item">
+                  <span>
+                    <i class="legend-dot teal"></i>
+                    Medical
+                  </span>
+                  <strong>34%</strong>
+                </div>
+
+                <div class="legend-item">
+                  <span>
+                    <i class="legend-dot purple"></i>
+                    Accident
+                  </span>
+                  <strong>25%</strong>
+                </div>
+
+                <div class="legend-item">
+                  <span>
+                    <i class="legend-dot red"></i>
+                    Fire
+                  </span>
+                  <strong>18%</strong>
+                </div>
+
+                <div class="legend-item">
+                  <span>
+                    <i class="legend-dot yellow"></i>
+                    Security
+                  </span>
+                  <strong>13%</strong>
+                </div>
+
+                <div class="legend-item">
+                  <span>
+                    <i class="legend-dot gray"></i>
+                    Other
+                  </span>
+                  <strong>10%</strong>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- MAP -->
+
+          <div class="dashboard-card map-card">
+
+            <div class="card-header">
+
+              <div>
+
+                <div class="card-title">
+                  Live Incident Map
+                </div>
+
+                <div class="card-subtitle">
+                  Active emergency locations in Angat
+                </div>
+
+              </div>
+
+              <span class="map-live">
+                ● LIVE
+              </span>
+
+            </div>
+
+
+            <div class="map-container">
+
+              <div class="map-road road-horizontal road-one"></div>
+              <div class="map-road road-horizontal road-two"></div>
+              <div class="map-road road-horizontal road-three"></div>
+
+              <div class="map-road road-vertical road-four"></div>
+
+              <div class="map-pin pin-high pin-one">
+                <span>Medical Emergency</span>
+              </div>
+
+              <div class="map-pin pin-medium pin-two">
+                <span>Road Accident</span>
+              </div>
+
+              <div class="map-pin pin-high pin-three">
+                <span>Fire Incident</span>
+              </div>
+
+              <div class="map-location location-one">
+                Brgy. Marungko
+              </div>
+
+              <div class="map-location location-two">
+                Brgy. Laog
+              </div>
+
+              <div class="map-location location-three">
+                Brgy. Sta. Cruz
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- CURRENT CALL -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header">
+
+              <div>
+
+                <div class="card-title">
+                  Currently in Call
+                </div>
+
+                <div class="card-subtitle">
+                  Active telephony sessions
+                </div>
+
+              </div>
+
+              <span class="call-count">
+                2 / 2
+              </span>
+
+            </div>
+
+
+            <div class="call-list">
+
+              <div class="call-item">
+
+                <div class="call-left">
+
+                  <div class="call-avatar">
+                    MS
+                  </div>
+
+                  <div class="call-info">
+
+                    <strong>
+                      Maria Santos
+                    </strong>
+
+                    <span>
+                      09171234567
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <div class="call-duration">
+                  02:18
+                </div>
+
+              </div>
+
+
+              <div class="call-item">
+
+                <div class="call-left">
+
+                  <div class="call-avatar purple">
+                    JD
+                  </div>
+
+                  <div class="call-info">
+
+                    <strong>
+                      Juan Dela Cruz
+                    </strong>
+
+                    <span>
+                      09181234567
+                    </span>
+
+                  </div>
+
+                </div>
+
+                <div class="call-duration">
+                  01:42
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- LATEST INCIDENTS -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header">
+
+              <div>
+
+                <div class="card-title">
+                  Latest Incidents
+                </div>
+
+                <div class="card-subtitle">
+                  Recently recorded emergency cases
+                </div>
+
+              </div>
+
+              <button
+                class="view-all"
+                (click)="showPage('Incident Recording')">
+
+                View All →
+
+              </button>
+
+            </div>
+
+
+            <div class="incident-list">
+
+              <div
+                class="incident-row"
+                *ngFor="let incident of incidents.slice(0, 3)">
+
+                <div class="incident-icon">
+                  ⚠
+                </div>
+
+                <div class="incident-details">
+
+                  <strong>
+                    {{ incident.type }}
+                  </strong>
+
+                  <span>
+                    {{ incident.location }} • {{ incident.date }}
+                  </span>
+
+                </div>
+
+                <span
+                  class="badge"
+                  [ngClass]="'badge-' + incident.priority.toLowerCase()">
+
+                  {{ incident.priority }}
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- CALL QUEUE -->
+
+          <div class="dashboard-card">
+
+            <div class="card-header">
+
+              <div>
+
+                <div class="card-title">
+                  Call Queue
+                </div>
+
+                <div class="card-subtitle">
+                  Callers waiting for an operator
+                </div>
+
+              </div>
+
+              <span class="queue-count">
+                03
+              </span>
+
+            </div>
+
+
+            <div class="queue-list">
+
+              <div class="queue-item">
+
+                <span class="queue-number">
+                  01
+                </span>
+
+                <div class="queue-info">
+
+                  <strong>
+                    Incoming Caller
+                  </strong>
+
+                  <span>
+                    Waiting 00:42
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <div class="queue-item">
+
+                <span class="queue-number">
+                  02
+                </span>
+
+                <div class="queue-info">
+
+                  <strong>
+                    Incoming Caller
+                  </strong>
+
+                  <span>
+                    Waiting 01:18
+                  </span>
+
+                </div>
+
+              </div>
+
+
+              <div class="queue-item">
+
+                <span class="queue-number">
+                  03
+                </span>
+
+                <div class="queue-info">
+
+                  <strong>
+                    Incoming Caller
+                  </strong>
+
+                  <span>
+                    Waiting 02:03
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           INCIDENT RECORDING
+      ==================================================== -->
+
+      <div
+        *ngIf="currentPage === 'Incident Recording'"
+        class="page-wrapper">
+
+        <div class="page-heading">
+
+          <div>
+            <h2>Incident Recording</h2>
+
+            <p>
+              Record and manage emergency incidents received by the EOC.
+            </p>
+          </div>
+
+          <button
+            class="primary-btn"
+            (click)="openIncidentForm()">
+
+            + Record Incident
+
+          </button>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+          <div class="stat-card stat-teal">
+            <div class="stat-label">
+              TOTAL INCIDENTS
+            </div>
+
+            <div class="stat-number">
+              {{ incidents.length }}
+            </div>
+
+            <div class="stat-note">
+              Recorded incidents
+            </div>
+          </div>
+
+
+          <div class="stat-card stat-red">
+            <div class="stat-label">
+              HIGH PRIORITY
+            </div>
+
+            <div class="stat-number">
+              {{ highPriorityIncidents }}
+            </div>
+
+            <div class="stat-note">
+              Requires immediate attention
+            </div>
+          </div>
+
+
+          <div class="stat-card stat-yellow">
+            <div class="stat-label">
+              DISPATCHED
+            </div>
+
+            <div class="stat-number">
+              {{ dispatchedIncidents }}
+            </div>
+
+            <div class="stat-note">
+              Resources assigned
+            </div>
+          </div>
+
+
+          <div class="stat-card stat-purple">
+            <div class="stat-label">
+              RESPONDING
+            </div>
+
+            <div class="stat-number">
+              {{ respondingIncidents }}
+            </div>
+
+            <div class="stat-note">
+              Units responding
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="table-card">
+
+          <div class="table-top">
+
+            <div>
+              <h3>Recorded Incidents</h3>
+              <p>
+                Emergency incidents logged by dispatchers
+              </p>
+            </div>
+
+            <div class="table-controls">
+
+              <input
+                class="search-box"
+                [(ngModel)]="incidentSearch"
+                placeholder="Search incident..."
+                aria-label="Search incident">
+
+              <select
+                class="filter-select"
+                [(ngModel)]="incidentPriority"
+                aria-label="Filter incident priority">
+
+                <option value="">
+                  All priorities
+                </option>
+
+                <option value="High">
+                  High
+                </option>
+
+                <option value="Medium">
+                  Medium
+                </option>
+
+                <option value="Normal">
+                  Normal
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+
+          <div class="table-scroll">
+
+            <table class="data-table">
+
+              <thead>
+
+                <tr>
+                  <th>INCIDENT ID</th>
+                  <th>CALLER</th>
+                  <th>TYPE</th>
+                  <th>LOCATION</th>
+                  <th>PRIORITY</th>
+                  <th>STATUS</th>
+                  <th>ACTION</th>
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                <tr
+                  *ngFor="let incident of filteredIncidents">
+
+                  <td>
+                    <strong>
+                      {{ incident.id }}
+                    </strong>
+                  </td>
+
+                  <td>
+                    {{ incident.caller }}
+                  </td>
+
+                  <td>
+                    {{ incident.type }}
+                  </td>
+
+                  <td>
+                    {{ incident.location }}
+                  </td>
+
+                  <td>
+                    <span
+                      class="status-badge"
+                      [ngClass]="'status-' + incident.priority.toLowerCase()">
+
+                      {{ incident.priority }}
+
+                    </span>
+                  </td>
+
+                  <td>
+                    <span
+                      class="status-badge"
+                      [ngClass]="'status-' + incident.status.toLowerCase()">
+
+                      {{ incident.status }}
+
+                    </span>
+                  </td>
+
+                  <td>
+                    <button
+                      class="small-btn"
+                      (click)="viewIncident(incident)">
+
+                      View
+
+                    </button>
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+            <div
+              *ngIf="filteredIncidents.length === 0"
+              class="empty-state">
+
+              No incidents found.
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           VEHICLE MONITORING
+      ==================================================== -->
+
+      <div
+        *ngIf="currentPage === 'Vehicle Monitoring'"
+        class="page-wrapper">
+
+        <div class="page-heading">
+
+          <div>
+            <h2>Vehicle Monitoring</h2>
+
+            <p>
+              Monitor emergency vehicles and field response units.
+            </p>
+          </div>
+
+          <button
+            class="primary-btn"
+            (click)="openVehicleForm()">
+
+            + Add Vehicle
+
+          </button>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+          <div class="stat-card stat-teal">
+            <div class="stat-label">
+              AVAILABLE
+            </div>
+
+            <div class="stat-number">
+              {{ availableVehicles }}
+            </div>
+
+            <div class="stat-note">
+              Ready for dispatch
+            </div>
+          </div>
+
+
+          <div class="stat-card stat-purple">
+            <div class="stat-label">
+              DISPATCHED
+            </div>
+
+            <div class="stat-number">
+              {{ dispatchedVehicles }}
+            </div>
+
+            <div class="stat-note">
+              Assigned to incidents
+            </div>
+          </div>
+
+
+          <div class="stat-card stat-yellow">
+            <div class="stat-label">
+              RESPONDING
+            </div>
+
+            <div class="stat-number">
+              {{ respondingVehicles }}
+            </div>
+
+            <div class="stat-note">
+              Currently responding
+            </div>
+          </div>
+
+
+          <div class="stat-card stat-red">
+            <div class="stat-label">
+              MAINTENANCE
+            </div>
+
+            <div class="stat-number">
+              {{ maintenanceVehicles }}
+            </div>
+
+            <div class="stat-note">
+              Not available
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="table-card">
+
+          <div class="table-top">
+
+            <div>
+              <h3>Emergency Vehicles</h3>
+
+              <p>
+                Current vehicle availability and field location
+              </p>
+            </div>
+
+            <div class="table-controls">
+
+              <input
+                class="search-box"
+                [(ngModel)]="vehicleSearch"
+                placeholder="Search vehicle..."
+                aria-label="Search vehicle">
+
+              <select
+                class="filter-select"
+                [(ngModel)]="vehicleStatus"
+                aria-label="Filter vehicle status">
+
+                <option value="">
+                  All statuses
+                </option>
+
+                <option>Available</option>
+                <option>Dispatched</option>
+                <option>Responding</option>
+                <option>In Use</option>
+                <option>Maintenance</option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+
+          <div class="table-scroll">
+
+            <table class="data-table">
+
+              <thead>
+
+                <tr>
+                  <th>VEHICLE ID</th>
+                  <th>TYPE</th>
+                  <th>DEPARTMENT</th>
+                  <th>DRIVER</th>
+                  <th>STATUS</th>
+                  <th>LOCATION</th>
+                  <th>ACTION</th>
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                <tr
+                  *ngFor="let vehicle of filteredVehicles">
+
+                  <td>
+                    <strong>
+                      {{ vehicle.id }}
+                    </strong>
+                  </td>
+
+                  <td>
+                    {{ vehicle.type }}
+                  </td>
+
+                  <td>
+                    {{ vehicle.department }}
+                  </td>
+
+                  <td>
+                    {{ vehicle.driver }}
+                  </td>
+
+                  <td>
+
+                    <span
+                      class="status-badge"
+                      [ngClass]="'status-' + vehicle.status.toLowerCase().replace(' ', '-')">
+
+                      {{ vehicle.status }}
+
+                    </span>
+
+                  </td>
+
+                  <td>
+                    {{ vehicle.location }}
+                  </td>
+
+                  <td>
+
+                    <button
+                      class="small-btn"
+                      (click)="openVehicleUpdate(vehicle)">
+
+                      Update
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           INVENTORY MONITORING
+      ==================================================== -->
+
+      <div
+        *ngIf="currentPage === 'Inventory Monitoring'"
+        class="page-wrapper">
+
+        <div class="page-heading">
+
+          <div>
+            <h2>Inventory Monitoring</h2>
+
+            <p>
+              Monitor emergency supplies and available resources.
+            </p>
+          </div>
+
+          <button
+            class="primary-btn"
+            (click)="openInventoryForm()">
+
+            + Add Item
+
+          </button>
+
+        </div>
+
+
+        <div class="stats-grid">
+
+          <div class="stat-card stat-teal">
+            <div class="stat-label">
+              TOTAL ITEMS
+            </div>
+
+            <div class="stat-number">
+              {{ inventory.length }}
+            </div>
+
+            <div class="stat-note">
+              Inventory categories
+            </div>
+          </div>
+
+
+          <div class="stat-card stat-purple">
+            <div class="stat-label">
+              AVAILABLE
+            </div>
+
+            <div class="stat-number">
+              {{ availableInventory }}
+            </div>
+
+            <div class="stat-note">
+              Adequate stock
+            </div>
+          </div>
+
+
+          <div class="stat-card stat-yellow">
+            <div class="stat-label">
+              LOW STOCK
+            </div>
+
+            <div class="stat-number">
+              {{ lowInventory }}
+            </div>
+
+            <div class="stat-note">
+              Reorder recommended
+            </div>
+          </div>
+
+
+          <div class="stat-card stat-red">
+            <div class="stat-label">
+              OUT OF STOCK
+            </div>
+
+            <div class="stat-number">
+              {{ outInventory }}
+            </div>
+
+            <div class="stat-note">
+              Immediate replenishment
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="table-card">
+
+          <div class="table-top">
+
+            <div>
+              <h3>Emergency Supplies</h3>
+
+              <p>
+                Current quantity and stock condition
+              </p>
+            </div>
+
+            <div class="table-controls">
+
+              <input
+                class="search-box"
+                [(ngModel)]="inventorySearch"
+                placeholder="Search item..."
+                aria-label="Search inventory">
+
+              <select
+                class="filter-select"
+                [(ngModel)]="inventoryCategory"
+                aria-label="Filter inventory category">
+
+                <option value="">
+                  All categories
+                </option>
+
+                <option>Medical</option>
+                <option>Rescue</option>
+                <option>Equipment</option>
+                <option>Relief</option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+
+          <div class="table-scroll">
+
+            <table class="data-table">
+
+              <thead>
+
+                <tr>
+                  <th>ITEM</th>
+                  <th>CATEGORY</th>
+                  <th>QUANTITY</th>
+                  <th>UNIT</th>
+                  <th>REORDER LEVEL</th>
+                  <th>STATUS</th>
+                  <th>ACTION</th>
+                </tr>
+
+              </thead>
+
+              <tbody>
+
+                <tr
+                  *ngFor="let item of filteredInventory">
+
+                  <td>
+                    <strong>
+                      {{ item.item }}
+                    </strong>
+                  </td>
+
+                  <td>
+                    {{ item.category }}
+                  </td>
+
+                  <td>
+                    {{ item.quantity }}
+                  </td>
+
+                  <td>
+                    {{ item.unit }}
+                  </td>
+
+                  <td>
+                    {{ item.reorder }}
+                  </td>
+
+                  <td>
+
+                    <span
+                      class="status-badge"
+                      [ngClass]="{
+                        'status-available': getInventoryStatus(item) === 'Available',
+                        'status-medium': getInventoryStatus(item) === 'Low Stock',
+                        'status-critical': getInventoryStatus(item) === 'Out of Stock'
+                      }">
+
+                      {{ getInventoryStatus(item) }}
+
+                    </span>
+
+                  </td>
+
+                  <td>
+
+                    <button
+                      class="small-btn"
+                      (click)="openStockUpdate(item)">
+
+                      Update Stock
+
+                    </button>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           CASE STATUS TRACKING
+      ==================================================== -->
+
+      <div
+        *ngIf="currentPage === 'Case Status Tracking'"
+        class="page-wrapper">
+
+        <div class="page-heading">
+
+          <div>
+            <h2>Case Status Tracking</h2>
+
+            <p>
+              Monitor incident progress from dispatch to resolution.
+            </p>
+          </div>
+
+          <button
+            class="secondary-btn"
+            (click)="showMessage('Case tracking information refreshed')">
+
+            ↻ Refresh
+
+          </button>
+
+        </div>
+
+
+        <div class="case-layout">
+
+
+          <!-- CASE LIST -->
+
+          <div class="case-list-card">
+
+            <input
+              class="case-search"
+              [(ngModel)]="caseSearch"
+              placeholder="Search cases..."
+              aria-label="Search cases">
+
+
+            <div class="case-list">
+
+              <div
+                *ngFor="let item of filteredCases"
+                class="case-item"
+                [class.active]="selectedCaseId === item.id"
+                (click)="selectCase(item.id)">
+
+                <div class="case-item-top">
+
+                  <span class="case-id">
+                    {{ item.id }}
+                  </span>
+
+                  <span
+                    class="status-badge"
+                    [ngClass]="'status-' + item.priority.toLowerCase()">
+
+                    {{ item.priority }}
+
+                  </span>
+
+                </div>
+
+
+                <div class="case-title">
+                  {{ item.title }}
+                </div>
+
+
+                <div class="case-location">
+                  {{ item.location }}
+                </div>
+
+
+                <div class="case-status-small">
+
+                  <span
+                    class="status-badge"
+                    [ngClass]="'status-' + item.status.toLowerCase()">
+
+                    {{ item.status }}
+
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- CASE DETAILS -->
+
+          <div class="case-details-card"
+               *ngIf="selectedCase as item">
+
+            <div class="case-detail-header">
+
+              <div>
+
+                <span class="case-id">
+                  {{ item.id }}
+                </span>
+
+                <h2>
+                  {{ item.title }}
+                </h2>
+
+                <p>
+                  {{ item.location }}
+                  • Updated {{ item.updated }}
+                </p>
+
+              </div>
+
+
+              <button
+                class="primary-btn"
+                (click)="openCaseStatus(item)">
+
+                Update Status
+
+              </button>
+
+            </div>
+
+
+            <div class="detail-grid">
+
+              <div class="detail-box">
+
+                <span>
+                  Priority
+                </span>
+
+                <strong>
+                  {{ item.priority }}
+                </strong>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <span>
+                  Department
+                </span>
+
+                <strong>
+                  {{ item.department }}
+                </strong>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <span>
+                  Assigned Vehicle
+                </span>
+
+                <strong>
+                  {{ item.vehicle }}
+                </strong>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <span>
+                  Current Status
+                </span>
+
+                <strong>
+                  {{ item.status }}
+                </strong>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <span>
+                  Incident Location
+                </span>
+
+                <strong>
+                  {{ item.location }}
+                </strong>
+
+              </div>
+
+
+              <div class="detail-box">
+
+                <span>
+                  Last Updated
+                </span>
+
+                <strong>
+                  {{ item.updated }}
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <h3 class="timeline-heading">
+              Case Timeline
+            </h3>
+
+
+            <div class="timeline">
+
+              <div
+                *ngFor="let step of timelineSteps; let i = index"
+                class="timeline-item"
+                [class.timeline-complete]="isTimelineComplete(i)">
+
+                <div class="timeline-dot"></div>
+
+                <div class="timeline-content">
+
+                  <div class="timeline-title">
+                    {{ step.title }}
+                  </div>
+
+                  <div class="timeline-time">
+                    {{ isTimelineComplete(i) ? 'Completed' : 'Pending' }}
+                  </div>
+
+                  <div class="timeline-description">
+                    {{ step.description }}
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ===================================================
+           OTHER PAGES
+      ==================================================== -->
+
+      <div
+        *ngIf="
+          currentPage !== 'Dashboard' &&
+          currentPage !== 'Incident Recording' &&
+          currentPage !== 'Vehicle Monitoring' &&
+          currentPage !== 'Inventory Monitoring' &&
+          currentPage !== 'Case Status Tracking'
+        "
+        class="page-wrapper">
+
+        <div class="page-placeholder">
+
+          <div class="placeholder-icon">
+            ◉
+          </div>
+
+          <h2>
+            {{ currentPage }}
+          </h2>
+
+          <p>
+            This module is part of the Emergency Operations Dashboard.
+          </p>
+
+          <span class="module-ready">
+            Angular module ready
+          </span>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+  </main>
+
+
+  <!-- =====================================================
+       MODAL
+  ====================================================== -->
+
+  <div
+    *ngIf="modalOpen"
+    class="modal-overlay"
+    (click)="closeModal()">
+
+    <div
+      class="modal"
+      (click)="$event.stopPropagation()">
+
+
+      <!-- INCIDENT FORM -->
+
+      <ng-container
+        *ngIf="modalType === 'incident-form'">
+
+        <div class="modal-header">
+
+          <div>
+            <h2>
+              Record New Incident
+            </h2>
+
+            <p>
+              Enter the details of the emergency incident.
+            </p>
+          </div>
+
+          <button
+            class="modal-close"
+            (click)="closeModal()">
+
+            ×
+
+          </button>
+
+        </div>
+
+
+        <form
+          class="modal-body"
+          (ngSubmit)="saveIncident()">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Caller Name
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="incidentForm.caller"
+                name="caller"
+                required
+                placeholder="Enter caller name">
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Contact Number
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="incidentForm.contact"
+                name="contact"
+                required
+                placeholder="09XXXXXXXXX">
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Incident Type
+              </label>
+
+              <select
+                class="form-select"
+                [(ngModel)]="incidentForm.type"
+                name="type"
+                required>
+
+                <option value="">
+                  Select incident type
+                </option>
+
+                <option>Medical Emergency</option>
+                <option>Road Accident</option>
+                <option>Fire Incident</option>
+                <option>Security Concern</option>
+                <option>Natural Disaster</option>
+                <option>Other</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Priority
+              </label>
+
+              <select
+                class="form-select"
+                [(ngModel)]="incidentForm.priority"
+                name="priority"
+                required>
+
+                <option value="">
+                  Select priority
+                </option>
+
+                <option>High</option>
+                <option>Medium</option>
+                <option>Normal</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+              <label class="form-label">
+                Incident Location
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="incidentForm.location"
+                name="location"
+                required
+                placeholder="Barangay / street / landmark">
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Resources Required
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="incidentForm.resources"
+                name="resources"
+                placeholder="Ambulance, Rescue Vehicle...">
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Initial Status
+              </label>
+
+              <select
+                class="form-select"
+                [(ngModel)]="incidentForm.status"
+                name="status">
+
+                <option>Pending</option>
+                <option>Dispatched</option>
+                <option>Responding</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+              <label class="form-label">
+                Incident Description
+              </label>
+
+              <textarea
+                class="form-textarea"
+                [(ngModel)]="incidentForm.description"
+                name="description"
+                placeholder="Describe the incident...">
+              </textarea>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-actions">
+
+            <button
+              type="button"
+              class="secondary-btn"
+              (click)="closeModal()">
+
+              Cancel
+
+            </button>
+
+            <button
+              type="submit"
+              class="primary-btn">
+
+              Save Incident
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </ng-container>
+
+
+      <!-- INCIDENT VIEW -->
+
+      <ng-container
+        *ngIf="modalType === 'incident-view' && selectedIncident">
+
+        <div class="modal-header">
+
+          <div>
+            <h2>
+              Incident Details
+            </h2>
+
+            <p>
+              {{ selectedIncident.id }}
+            </p>
+          </div>
+
+          <button
+            class="modal-close"
+            (click)="closeModal()">
+
+            ×
+
+          </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+          <div class="detail-grid">
+
+            <div class="detail-box">
+              <span>Caller</span>
+              <strong>{{ selectedIncident.caller }}</strong>
+            </div>
+
+            <div class="detail-box">
+              <span>Contact</span>
+              <strong>{{ selectedIncident.contact }}</strong>
+            </div>
+
+            <div class="detail-box">
+              <span>Incident Type</span>
+              <strong>{{ selectedIncident.type }}</strong>
+            </div>
+
+            <div class="detail-box">
+              <span>Location</span>
+              <strong>{{ selectedIncident.location }}</strong>
+            </div>
+
+            <div class="detail-box">
+              <span>Priority</span>
+              <strong>{{ selectedIncident.priority }}</strong>
+            </div>
+
+            <div class="detail-box">
+              <span>Status</span>
+              <strong>{{ selectedIncident.status }}</strong>
+            </div>
+
+            <div class="detail-box">
+              <span>Resources</span>
+              <strong>{{ selectedIncident.resources || 'None' }}</strong>
+            </div>
+
+            <div class="detail-box">
+              <span>Date Recorded</span>
+              <strong>{{ selectedIncident.date }}</strong>
+            </div>
+
+          </div>
+
+
+          <div class="detail-box description-box">
+
+            <span>
+              Description
+            </span>
+
+            <strong>
+              {{ selectedIncident.description || 'No description provided.' }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </ng-container>
+
+
+      <!-- VEHICLE FORM -->
+
+      <ng-container
+        *ngIf="modalType === 'vehicle-form'">
+
+        <div class="modal-header">
+
+          <div>
+            <h2>
+              Add Emergency Vehicle
+            </h2>
+
+            <p>
+              Register a vehicle for field resource monitoring.
+            </p>
+          </div>
+
+          <button
+            class="modal-close"
+            (click)="closeModal()">
+
+            ×
+
+          </button>
+
+        </div>
+
+
+        <form
+          class="modal-body"
+          (ngSubmit)="saveVehicle()">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Vehicle ID
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="vehicleForm.id"
+                name="vehicleId"
+                placeholder="e.g. AMB-03"
+                required>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Vehicle Type
+              </label>
+
+              <select
+                class="form-select"
+                [(ngModel)]="vehicleForm.type"
+                name="vehicleType"
+                required>
+
+                <option value="">
+                  Select type
+                </option>
+
+                <option>Ambulance</option>
+                <option>Rescue Vehicle</option>
+                <option>Fire Truck</option>
+                <option>Patrol Vehicle</option>
+                <option>Other</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Department
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="vehicleForm.department"
+                name="department"
+                placeholder="Department"
+                required>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Driver
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="vehicleForm.driver"
+                name="driver"
+                placeholder="Driver name"
+                required>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Status
+              </label>
+
+              <select
+                class="form-select"
+                [(ngModel)]="vehicleForm.status"
+                name="vehicleStatus">
+
+                <option>Available</option>
+                <option>Dispatched</option>
+                <option>Responding</option>
+                <option>In Use</option>
+                <option>Maintenance</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Current Location
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="vehicleForm.location"
+                name="vehicleLocation"
+                placeholder="Current location"
+                required>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-actions">
+
+            <button
+              type="button"
+              class="secondary-btn"
+              (click)="closeModal()">
+
+              Cancel
+
+            </button>
+
+            <button
+              type="submit"
+              class="primary-btn">
+
+              Add Vehicle
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </ng-container>
+
+
+      <!-- VEHICLE UPDATE -->
+
+      <ng-container
+        *ngIf="modalType === 'vehicle-update'">
+
+        <div class="modal-header">
+
+          <div>
+            <h2>
+              Update Vehicle
+            </h2>
+
+            <p>
+              {{ selectedVehicle?.id }}
+            </p>
+          </div>
+
+          <button
+            class="modal-close"
+            (click)="closeModal()">
+
+            ×
+
+          </button>
+
+        </div>
+
+
+        <form
+          class="modal-body"
+          (ngSubmit)="updateVehicle()">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Driver
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="vehicleForm.driver"
+                name="updateDriver"
+                required>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Status
+              </label>
+
+              <select
+                class="form-select"
+                [(ngModel)]="vehicleForm.status"
+                name="updateStatus">
+
+                <option>Available</option>
+                <option>Dispatched</option>
+                <option>Responding</option>
+                <option>In Use</option>
+                <option>Maintenance</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group full">
+
+              <label class="form-label">
+                Current Location
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="vehicleForm.location"
+                name="updateLocation"
+                required>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-actions">
+
+            <button
+              type="button"
+              class="secondary-btn"
+              (click)="closeModal()">
+
+              Cancel
+
+            </button>
+
+            <button
+              type="submit"
+              class="primary-btn">
+
+              Save Changes
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </ng-container>
+
+
+      <!-- INVENTORY FORM -->
+
+      <ng-container
+        *ngIf="modalType === 'inventory-form'">
+
+        <div class="modal-header">
+
+          <div>
+            <h2>
+              Add Inventory Item
+            </h2>
+
+            <p>
+              Register an emergency supply or equipment item.
+            </p>
+          </div>
+
+          <button
+            class="modal-close"
+            (click)="closeModal()">
+
+            ×
+
+          </button>
+
+        </div>
+
+
+        <form
+          class="modal-body"
+          (ngSubmit)="saveInventory()">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Item Name
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="inventoryForm.item"
+                name="item"
+                placeholder="e.g. First Aid Kit"
+                required>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Category
+              </label>
+
+              <select
+                class="form-select"
+                [(ngModel)]="inventoryForm.category"
+                name="category"
+                required>
+
+                <option value="">
+                  Select category
+                </option>
+
+                <option>Medical</option>
+                <option>Rescue</option>
+                <option>Equipment</option>
+                <option>Relief</option>
+
+              </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Quantity
+              </label>
+
+              <input
+                class="form-input"
+                type="number"
+                min="0"
+                [(ngModel)]="inventoryForm.quantity"
+                name="quantity"
+                required>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Unit
+              </label>
+
+              <input
+                class="form-input"
+                [(ngModel)]="inventoryForm.unit"
+                name="unit"
+                placeholder="pcs, kits, tanks..."
+                required>
+
+            </div>
+
+
+            <div class="form-group full">
+
+              <label class="form-label">
+                Reorder Level
+              </label>
+
+              <input
+                class="form-input"
+                type="number"
+                min="0"
+                [(ngModel)]="inventoryForm.reorder"
+                name="reorder"
+                required>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-actions">
+
+            <button
+              type="button"
+              class="secondary-btn"
+              (click)="closeModal()">
+
+              Cancel
+
+            </button>
+
+            <button
+              type="submit"
+              class="primary-btn">
+
+              Add Item
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </ng-container>
+
+
+      <!-- STOCK UPDATE -->
+
+      <ng-container
+        *ngIf="modalType === 'stock-update'">
+
+        <div class="modal-header">
+
+          <div>
+            <h2>
+              Update Stock
+            </h2>
+
+            <p>
+              {{ selectedInventory?.item }}
+            </p>
+          </div>
+
+          <button
+            class="modal-close"
+            (click)="closeModal()">
+
+            ×
+
+          </button>
+
+        </div>
+
+
+        <form
+          class="modal-body"
+          (ngSubmit)="updateStock()">
+
+          <div class="form-grid">
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Current Quantity
+              </label>
+
+              <input
+                class="form-input"
+                type="number"
+                min="0"
+                [(ngModel)]="stockForm.quantity"
+                name="stockQuantity"
+                required>
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label class="form-label">
+                Reorder Level
+              </label>
+
+              <input
+                class="form-input"
+                type="number"
+                min="0"
+                [(ngModel)]="stockForm.reorder"
+                name="stockReorder"
+                required>
+
+            </div>
+
+          </div>
+
+
+          <div class="form-actions">
+
+            <button
+              type="button"
+              class="secondary-btn"
+              (click)="closeModal()">
+
+              Cancel
+
+            </button>
+
+            <button
+              type="submit"
+              class="primary-btn">
+
+              Save Stock
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </ng-container>
+
+
+      <!-- CASE STATUS -->
+
+      <ng-container
+        *ngIf="modalType === 'case-status'">
+
+        <div class="modal-header">
+
+          <div>
+            <h2>
+              Update Case Status
+            </h2>
+
+            <p>
+              {{ selectedCase?.id }} • {{ selectedCase?.title }}
+            </p>
+          </div>
+
+          <button
+            class="modal-close"
+            (click)="closeModal()">
+
+            ×
+
+          </button>
+
+        </div>
+
+
+        <form
+          class="modal-body"
+          (ngSubmit)="updateCaseStatus()">
+
+          <div class="form-group">
+
+            <label class="form-label">
+              Current Status
+            </label>
+
+            <select
+              class="form-select"
+              [(ngModel)]="statusForm"
+              name="caseStatus">
+
+              <option>Pending</option>
+              <option>Dispatched</option>
+              <option>Responding</option>
+              <option>Monitoring</option>
+              <option>Resolved</option>
+              <option>Closed</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-actions">
+
+            <button
+              type="button"
+              class="secondary-btn"
+              (click)="closeModal()">
+
+              Cancel
+
+            </button>
+
+            <button
+              type="submit"
+              class="primary-btn">
+
+              Update Status
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </ng-container>
+
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       TOAST
+  ====================================================== -->
+
+  <div
+    class="toast"
+    [class.show]="toastVisible">
+
+    ✓ {{ toastMessage }}
+
+  </div>
+
+</div>

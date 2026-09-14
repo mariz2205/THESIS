@@ -18,6 +18,9 @@ export const routes: Routes = [
     component: AdminLayout,
     canActivate: [authGuard],
     children: [
+      { path: 'dashboard', component: Dashboard },
+      { path: 'calls', component: Calls },
+      { path: 'department-routing', component: DepartmentRouting },
       { path: 'users', component: UserList },
       { path: 'users/new', component: UserForm },
       { path: 'users/:id/edit', component: UserForm },
